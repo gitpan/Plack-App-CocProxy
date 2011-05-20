@@ -3,7 +3,7 @@ package Plack::App::CocProxy;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use parent qw(Plack::App::File);
 use Plack::App::Proxy;
 use Plack::Util::Accessor qw/backend/;
@@ -57,6 +57,9 @@ sub locate_file {
 	my $docroot = $self->root || ".";
 	for my $path (@paths) {
 		my $try = "$docroot/$path";
+		if (-l $try) {
+			$try = readlink($try);
+		}
 		if (-r $try) {
 			$env->{'psgi.errors'}->print(sprintf("Arrogated %s => %s\n", $req, $try));
 			return $try, undef;
