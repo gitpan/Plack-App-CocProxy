@@ -3,7 +3,6 @@ BEGIN {
 		Module::Install::AuthorTests
 		Module::Install::Repository
 		Module::Install::ReadmeFromPod
-		Module::Install::TestBase
 	);
 	for (@mip) {
 		eval "require $_";
@@ -27,8 +26,9 @@ install_script 'bin/cocproxy';
 requires 'Plack';
 requires 'Plack::App::Proxy';
 requires 'Plack::App::File';
+requires 'opts';
 
-recommends 'Twiggy';
+requires 'Starlet';
 
 build_requires 'Test::More';
 build_requires 'Test::TCP';
@@ -39,9 +39,6 @@ author_tests('xt');
 
 # Module::Install::Repository
 auto_set_repository;
-
-# Module::Install::TestBase
-use_test_base;
 
 # Module::Install::ReadmeFromPod
 readme_from 'lib/Plack/App/CocProxy.pm';
